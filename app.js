@@ -1,9 +1,8 @@
-// app.js
 let wordsForTest = [];
 let randomizedWords = [];
 let currentIndex = 0;
-let spokenWords = new Set(); // To keep track of spoken words
-let currentUtterance = null; // To keep track of the current utterance
+let spokenWords = new Set();
+let currentUtterance = null;
 
 function startOralTest() {
   const wordInput = document.getElementById('wordInput');
@@ -13,7 +12,6 @@ function startOralTest() {
   wordsForTest = wordInput.value.trim().split(/\s+/);
 
   if (wordsForTest.length > 0) {
-    // Generate a random order for the words (without repetition)
     if (currentIndex >= randomizedWords.length) {
       currentIndex = 0;
       spokenWords.clear();
@@ -24,10 +22,9 @@ function startOralTest() {
       speechSynthesis.cancel();
     }
 
-    // Create a new SpeechSynthesisUtterance for the current word
     const currentWord = randomizedWords[currentIndex];
     const utterance = new SpeechSynthesisUtterance(currentWord);
-    utterance.lang = 'ne-NP'; // Set language to Nepali
+    utterance.lang = 'ne-NP';
 
     currentUtterance = utterance;
 
@@ -48,6 +45,32 @@ function startOralTest() {
     };
   } else {
     alert('Please enter words for the test.');
+  }
+}
+
+function repeatFullCode() {
+  const wordInput = document.getElementById('wordInput');
+  const displayedWordElement = document.getElementById('displayedWord');
+  const startButton = document.getElementById('startButton');
+
+  wordInput.value = '';
+  displayedWordElement.textContent = '';
+  startButton.disabled = false;
+
+  currentIndex = 0;
+  spokenWords.clear();
+  randomizedWords = [];
+  currentUtterance = null;
+}
+
+function repeatWord() {
+  if (currentUtterance) {
+    speechSynthesis.cancel();
+
+    const utterance = new SpeechSynthesisUtterance(randomizedWords[currentIndex - 1]);
+    utterance.lang = 'ne-NP';
+
+    speechSynthesis.speak(utterance);
   }
 }
 
@@ -72,6 +95,6 @@ function stopSpeech() {
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
+    [array[i], array[j]] = [array[j], array[i]];
   }
-}
+  }
