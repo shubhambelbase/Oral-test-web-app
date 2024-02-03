@@ -4,6 +4,30 @@ let currentIndex = 0;
 let spokenWords = new Set();
 let currentUtterance = null;
 
+// Fade-in animation for the entire body
+document.body.style.opacity = 1; // Ensure the body starts visible
+document.body.style.animation = 'fadeIn 1s ease-in-out forwards';
+
+// Show the guide modal
+function showGuide() {
+    const guideModal = document.getElementById('guideModal');
+    guideModal.style.display = 'block';
+}
+
+// Close the guide modal
+function closeGuideModal() {
+    const guideModal = document.getElementById('guideModal');
+    guideModal.style.display = 'none';
+}
+
+// Close the guide modal if the user clicks outside the modal
+window.onclick = function(event) {
+    const guideModal = document.getElementById('guideModal');
+    if (event.target === guideModal) {
+        guideModal.style.display = 'none';
+    }
+}
+
 function startOralTest() {
   const wordInput = document.getElementById('wordInput');
   const startButton = document.getElementById('startButton');
@@ -117,4 +141,4 @@ function shuffleArray(array) {
     const j = Math.floor(Math.random() * (i + 1));
     [array[i], array[j]] = [array[j], array[i]];
   }
-                                                   }
+      }
