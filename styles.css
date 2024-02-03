@@ -16,6 +16,7 @@ body {
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  animation: fadeInContainer 1s ease-in-out forwards; /* Animation for fading in container */
 }
 
 textarea {
@@ -63,8 +64,8 @@ button:hover {
   position: absolute;
   top: 10px;
   right: 10px;
-  padding: 12px 16px; /* Increased padding for a bigger button */
-  font-size: 16px; /* Increased font size */
+  padding: 8px 12px;
+  font-size: 14px;
   cursor: pointer;
 }
 
@@ -99,4 +100,24 @@ button:hover {
 #displayedWord {
   margin-top: 20px;
   font-size: 24px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInContainer {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
