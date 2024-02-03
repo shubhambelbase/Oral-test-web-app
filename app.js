@@ -48,21 +48,6 @@ function startOralTest() {
   }
 }
 
-function repeatFullCode() {
-  const wordInput = document.getElementById('wordInput');
-  const displayedWordElement = document.getElementById('displayedWord');
-  const startButton = document.getElementById('startButton');
-
-  wordInput.value = '';
-  displayedWordElement.textContent = '';
-  startButton.disabled = false;
-
-  currentIndex = 0;
-  spokenWords.clear();
-  randomizedWords = [];
-  currentUtterance = null;
-}
-
 function repeatWord() {
   if (currentUtterance) {
     speechSynthesis.cancel();
@@ -74,11 +59,39 @@ function repeatWord() {
   }
 }
 
-function generateRandomOrder(words) {
-  const uniqueWords = Array.from(new Set(words));
-  let randomOrder = [...uniqueWords];
-  shuffleArray(randomOrder);
-  return randomOrder;
+function resetOralTest() {
+  const startButton = document.getElementById('startButton');
+  const displayedWordElement = document.getElementById('displayedWord');
+
+  currentIndex = 0;
+  spokenWords.clear();
+  randomizedWords = generateRandomOrder(wordsForTest);
+
+  if (currentUtterance) {
+    speechSynthesis.cancel();
+  }
+
+  const currentWord = randomizedWords[currentIndex];
+  const utterance = new SpeechSynthesisUtterance(currentWord);
+  utterance.lang = 'ne-NP';
+
+  currentUtterance = utterance;
+
+  speechSynthesis.speak(utterance);
+
+  displayedWordElement.textContent = currentWord;
+  spokenWords.add(currentWord);
+  currentIndex++;
+
+  startButton.disabled = true;
+
+  utterance.onend = function() {
+    if (currentIndex < randomizedWords.length) {
+      startButton.disabled = false;
+    } else {
+      alert('Oral test completed. Every word has been spoken.');
+    }
+  };
 }
 
 function stopSpeech() {
@@ -92,9 +105,16 @@ function stopSpeech() {
   }
 }
 
+function generateRandomOrder(words) {
+  const uniqueWords = Array.from(new Set(words));
+  let randomOrder = [...uniqueWords];
+  shuffleArray(randomOrder);
+  return randomOrder;
+}
+
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [array[i], array[j]] = [array[j], array[i]];
   }
-  }
+                                                   }
