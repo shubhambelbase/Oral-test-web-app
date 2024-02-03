@@ -1,45 +1,63 @@
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f0f0f0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    margin: 0;
+  font-family: 'Arial', sans-serif;
+  background-color: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
 }
 
 .container {
-    text-align: center;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 textarea {
-    width: 100%;
-    height: 100px;
-    margin-top: 10px;
-    resize: none;
+  width: 100%;
+  height: 100px;
+  margin-top: 10px;
+  resize: none;
 }
 
 button {
-    padding: 10px 20px;
-    margin-top: 10px;
-    font-size: 16px;
-    cursor: pointer;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    transition: background-color 0.3s;
+  padding: 10px 20px;
+  margin-top: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+#startButton {
+  background-color: #007bff;
+  color: #fff;
+}
+
+#stopButton {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+#repeatButton {
+  background-color: #007bff;
+  color: #fff;
+}
+
+#resetButton {
+  background-color: #000;
+  color: #fff;
 }
 
 button:hover {
-    background-color: #0056b3;
+  filter: brightness(90%);
 }
 
 #displayedWord {
-    margin-top: 20px;
-    font-size: 24px;
+  margin-top: 20px;
+  font-size: 24px;
 }
