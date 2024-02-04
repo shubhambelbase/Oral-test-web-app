@@ -5,6 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Oral Test App</title>
     <link rel="stylesheet" href="styles.css">
+    
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-90QMFCFLEF"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-90QMFCFLEF');
+</script>
 </head>
 <body>
     <div class="container">
@@ -16,11 +26,10 @@
         <button id="stopButton" onclick="stopSpeech()">Stop</button>
         <button id="repeatButton" onclick="repeatWord()">Repeat</button>
         <button id="resetButton" onclick="resetOralTest()">Reset</button>
-        <button id="clearButton" onclick="clearWords()">Clear Words</button> <!-- Add this button -->
         <div id="displayedWord"></div>
     </div>
 
-    <!-- Modal for Guide -->
+<!-- Modal for Guide -->
 <div id="guideModal" class="modal">
     <div class="modal-content">
         <span class="close" onclick="closeGuideModal()">&times;</span>
@@ -34,11 +43,11 @@
             <li>"Clear Words" removes the written words and resets everything.</li>
         <p>Thanks for using this web app!</p>
 
-        <!-- Copyright Notice -->
-        <p id="copyrightNotice">© 2024 Reserved by Shubham</p>
+            <!-- Copyright Notice -->
+            <p id="copyrightNotice">© 2024 Reserved by Shubham</p>
+        </div>
     </div>
-</div>
 
     <script src="app.js"></script>
 </body>
-</html>
+    </html>
