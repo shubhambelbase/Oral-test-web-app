@@ -5,7 +5,7 @@ let spokenWords = new Set();
 let currentUtterance = null;
 
 // Fade-in animation for the entire body
-document.body.style.opacity = 1; // Ensure the body starts visible
+document.body.style.opacity = 1;
 document.body.style.animation = 'fadeIn 1s ease-in-out forwards';
 
 // Show the guide modal
@@ -45,6 +45,9 @@ function clearWords() {
     const displayedWordElement = document.getElementById('displayedWord');
     displayedWordElement.textContent = '';
 
+    const displayedWordContainer = document.getElementById('displayedWordContainer');
+    displayedWordContainer.style.display = 'none'; // Hide the displayed word container
+
     const startButton = document.getElementById('startButton');
     startButton.disabled = false;
 }
@@ -53,6 +56,7 @@ function startOralTest() {
     const wordInput = document.getElementById('wordInput');
     const startButton = document.getElementById('startButton');
     const displayedWordElement = document.getElementById('displayedWord');
+    const displayedWordContainer = document.getElementById('displayedWordContainer');
 
     wordsForTest = wordInput.value.trim().split(/\s+/);
 
@@ -76,6 +80,7 @@ function startOralTest() {
         speechSynthesis.speak(utterance);
 
         displayedWordElement.textContent = currentWord;
+        displayedWordContainer.style.display = document.getElementById('displayCheckbox').checked ? 'block' : 'none';
         spokenWords.add(currentWord);
         currentIndex++;
 
@@ -107,6 +112,7 @@ function repeatWord() {
 function resetOralTest() {
     const startButton = document.getElementById('startButton');
     const displayedWordElement = document.getElementById('displayedWord');
+    const displayedWordContainer = document.getElementById('displayedWordContainer');
 
     currentIndex = 0;
     spokenWords.clear();
@@ -125,6 +131,7 @@ function resetOralTest() {
     speechSynthesis.speak(utterance);
 
     displayedWordElement.textContent = currentWord;
+    displayedWordContainer.style.display = document.getElementById('displayCheckbox').checked ? 'block' : 'none';
     spokenWords.add(currentWord);
     currentIndex++;
 
@@ -150,6 +157,15 @@ function stopSpeech() {
     }
 }
 
+// Add this function to update the display word visibility when the checkbox changes
+function updateDisplayWordVisibility() {
+    const displayedWordContainer = document.getElementById('displayedWordContainer');
+    displayedWordContainer.style.display = document.getElementById('displayCheckbox').checked ? 'block' : 'none';
+}
+
+// Add an event listener to the checkbox
+document.getElementById('displayCheckbox').addEventListener('change', updateDisplayWordVisibility);
+
 function generateRandomOrder(words) {
     const uniqueWords = Array.from(new Set(words));
     let randomOrder = [...uniqueWords];
@@ -162,4 +178,4 @@ function shuffleArray(array) {
         const j = Math.floor(Math.random() * (i + 1));
         [array[i], array[j]] = [array[j], array[i]];
     }
-    }
+}
