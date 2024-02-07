@@ -17,12 +17,22 @@
         <button id="repeatButton" onclick="repeatWord()">Repeat</button>
         <button id="resetButton" onclick="resetOralTest()">Reset</button>
         <button id="clearButton" onclick="clearWords()">Clear Words</button>
-        
+        <button id="autoSpeechButton" onclick="startAutoSpeech()">Auto Speak</button> <!-- New button for auto speech -->
+        <div id="displayedWordContainer">
+          <div id="displayedWord"></div>
+          <div id="timer"></div> <!-- Add this line for the countdown timer -->
+        </div>
+
         <!-- Add this checkbox and modify the display word container -->
         <label for="displayCheckbox">Show Word:</label>
         <input type="checkbox" id="displayCheckbox" checked>
         <div id="displayedWordContainer">
             <div id="displayedWord"></div>
+        </div>
+
+        <!-- Add this progress bar within the container -->
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
         </div>
         
     </div>
@@ -39,6 +49,7 @@
                 <li>Use "Repeat" to hear the word again.</li>
                 <li>"Reset" shuffles the words for a new test.</li>
                 <li>"Clear Words" removes the written words and resets everything.</li>
+                <li>"Auto Speak" automatically speaks all words in random order with a 5-second interval between each word.</li> <!-- Include auto speech in the guide -->
             </ol>
             <p>Thanks for using this web app!</p>
 
@@ -49,4 +60,4 @@
 
     <script src="app.js"></script>
 </body>
-</html
+</html>
