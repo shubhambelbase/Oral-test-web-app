@@ -208,7 +208,7 @@ function startAutoSpeech() {
         speakNextWord();
 
         // Start the interval for subsequent words with a shorter delay
-        autoSpeechInterval = setInterval(speakNextWord, 5500); // Adjust delay as needed
+        autoSpeechInterval = setInterval(speakNextWord, 8000); // Adjust delay as needed
     } else {
         alert('Please enter words for the test.');
     }
