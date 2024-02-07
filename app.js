@@ -3,24 +3,23 @@ let randomizedWords = [];
 let currentIndex = 0;
 let spokenWords = new Set();
 let currentUtterance = null;
+let progressBar = document.getElementById('progressBar');
+let progressValue = 0;
+let autoSpeechInterval = null;
 
-// Fade-in animation for the entire body
 document.body.style.opacity = 1;
 document.body.style.animation = 'fadeIn 1s ease-in-out forwards';
 
-// Show the guide modal
 function showGuide() {
     const guideModal = document.getElementById('guideModal');
     guideModal.style.display = 'block';
 }
 
-// Close the guide modal
 function closeGuideModal() {
     const guideModal = document.getElementById('guideModal');
     guideModal.style.display = 'none';
 }
 
-// Close the guide modal if the user clicks outside the modal
 window.onclick = function(event) {
     const guideModal = document.getElementById('guideModal');
     if (event.target === guideModal) {
@@ -28,12 +27,10 @@ window.onclick = function(event) {
     }
 }
 
-// Add this function to clear the words and reset everything
 function clearWords() {
     const wordInput = document.getElementById('wordInput');
-    wordInput.value = ''; // Clear the written words
+    wordInput.value = '';
 
-    // Reset everything
     currentIndex = 0;
     spokenWords.clear();
     randomizedWords = [];
@@ -46,10 +43,14 @@ function clearWords() {
     displayedWordElement.textContent = '';
 
     const displayedWordContainer = document.getElementById('displayedWordContainer');
-    displayedWordContainer.style.display = 'none'; // Hide the displayed word container
+    displayedWordContainer.style.display = 'none';
 
     const startButton = document.getElementById('startButton');
     startButton.disabled = false;
+
+    // Reset progress bar
+    progressValue = 0;
+    progressBar.style.width = '0%';
 }
 
 function startOralTest() {
@@ -86,12 +87,24 @@ function startOralTest() {
 
         startButton.disabled = true;
 
+        const progressInterval = setInterval(function() {
+            if (progressValue < 100) {
+                progressValue += 1;
+                progressBar.style.width = progressValue + '%';
+            } else {
+                clearInterval(progressInterval);
+            }
+        }, 100);
+
         utterance.onend = function () {
             if (currentIndex < randomizedWords.length) {
                 startButton.disabled = false;
             } else {
                 alert('Oral test completed. Every word has been spoken.');
             }
+            clearInterval(progressInterval);
+            progressValue = 0;
+            progressBar.style.width = '0%';
         };
     } else {
         alert('Please enter words for the test.');
@@ -157,13 +170,11 @@ function stopSpeech() {
     }
 }
 
-// Add this function to update the display word visibility when the checkbox changes
 function updateDisplayWordVisibility() {
     const displayedWordContainer = document.getElementById('displayedWordContainer');
     displayedWordContainer.style.display = document.getElementById('displayCheckbox').checked ? 'block' : 'none';
 }
 
-// Add an event listener to the checkbox
 document.getElementById('displayCheckbox').addEventListener('change', updateDisplayWordVisibility);
 
 function generateRandomOrder(words) {
@@ -179,3 +190,69 @@ function shuffleArray(array) {
         [array[i], array[j]] = [array[j], array[i]];
     }
 }
+
+// New function to handle auto speech
+function startAutoSpeech() {
+    if (autoSpeechInterval) {
+        clearInterval(autoSpeechInterval);
+    }
+
+    const wordInput = document.getElementById('wordInput');
+    wordsForTest = wordInput.value.trim().split(/\s+/);
+
+    if (wordsForTest.length > 0) {
+        randomizedWords = generateRandomOrder(wordsForTest);
+        currentIndex = 0;
+
+        // Speak the first word immediately
+        speakNextWord();
+
+        // Start the interval for subsequent words with a shorter delay
+        autoSpeechInterval = setInterval(speakNextWord, 5500); // Adjust delay as needed
+    } else {
+        alert('Please enter words for the test.');
+    }
+}
+
+function speakNextWord() {
+    if (currentIndex < randomizedWords.length) {
+        if (currentUtterance) {
+            speechSynthesis.cancel();
+        }
+
+        const currentWord = randomizedWords[currentIndex];
+        const utterance = new SpeechSynthesisUtterance(currentWord);
+        utterance.lang = 'ne-NP';
+
+        currentUtterance = utterance;
+
+        // Display the current word
+        const displayedWordElement = document.getElementById('displayedWord');
+        displayedWordElement.textContent = currentWord;
+        const displayedWordContainer = document.getElementById('displayedWordContainer');
+        displayedWordContainer.style.display = 'block';
+
+        // Display the countdown timer
+        let timer = 5; // Initial timer value (in seconds)
+        const timerElement = document.getElementById('timer');
+        timerElement.textContent= timer;
+
+        // Update timer every second
+        const countdown = setInterval(function() {
+            timer--;
+            timerElement.textContent = timer;
+
+            if (timer === 0) {
+                clearInterval(countdown);
+            }
+        }, 1000);
+
+        speechSynthesis.speak(utterance);
+
+        spokenWords.add(currentWord);
+        currentIndex++;
+    } else {
+        clearInterval(autoSpeechInterval);
+        alert('Auto speech completed.');
+    }
+        }
