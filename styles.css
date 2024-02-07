@@ -6,8 +6,8 @@ body {
   justify-content: center;
   height: 100vh;
   margin: 0;
-  opacity: 0; /* Start with zero opacity for the entire body */
-  animation: fadeIn 1s ease-in-out forwards; /* Animation for fading in */
+  opacity: 0;
+  animation: fadeIn 1s ease-in-out forwards;
 }
 
 .container {
@@ -16,7 +16,7 @@ body {
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  animation: fadeInContainer 1s ease-in-out forwards; /* Animation for fading in container */
+  animation: fadeInContainer 1s ease-in-out forwards;
 }
 
 textarea {
@@ -97,9 +97,24 @@ button:hover {
   right: 10px;
   cursor: pointer;
 }
+
 #displayedWord {
   margin-top: 20px;
   font-size: 24px;
+}
+
+/* Add these styles for the progress bar */
+.progress-container {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.progress-bar {
+  height: 20px;
+  background-color: #007bff;
+  width: 0;
+  border-radius: 4px;
+  transition: width 0.3s;
 }
 
 /* Add this style for the "Clear Words" button in the guide modal */
@@ -136,4 +151,40 @@ button:hover {
     opacity: 1;
     transform: translateY(0);
   }
+}
+#timer {
+  font-size: 24px;
+  color: #555;
+  margin-top: 10px;
+}
+.interval-selector {
+    margin-top: 20px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.interval-selector label {
+    margin-right: 10px;
+}
+
+.interval-selector select {
+    padding: 5px;
+    font-size: 16px;
+}
+
+.interval-selector button {
+    padding: 8px 16px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: #fff;
+    transition: background-color 0.3s;
+}
+
+.interval-selector button:hover {
+    background-color: #0056b3;
 }
